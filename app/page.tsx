@@ -1,6 +1,11 @@
 'use client';
 import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
-import { Search, Send, Database, Maximize2, Layers, User, Cpu, Activity, Info, BarChart3, ChevronRight, Minimize2, Settings, TrendingUp, DollarSign, Package, AlertCircle, CheckCircle2, Filter, Table as TableIcon, Download, EyeOff, Eye, Zap, RefreshCw, Layout, Network } from 'lucide-react';
+import { 
+  Search, Send, Database, Maximize2, Layers, User, Cpu, Activity, Info, BarChart3, ChevronRight, 
+  Minimize2, Settings, TrendingUp, DollarSign, Package, AlertCircle, CheckCircle2, Filter, 
+  Table as TableIcon, Download, EyeOff, Eye, Zap, RefreshCw, Layout, Network, ShieldCheck, 
+  FileText, Terminal, Box, History, MessageSquare, MoreHorizontal, Share2, CheckCircle
+} from 'lucide-react';
 import dynamic from 'next/dynamic';
 
 const ForceGraph2D = dynamic(() => import('react-force-graph-2d'), { ssr: false });
@@ -314,20 +319,14 @@ export default function App() {
         <div className={`transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] bg-white border-l border-slate-200 flex flex-col z-40 ${isSidebarOpen ? 'w-[40%]' : 'w-0 opacity-0 overflow-hidden'}`}>
           <div className="p-10 border-b border-slate-100">
              <div className="flex items-center justify-between mb-3">
-                <h3 className="text-xl font-black tracking-tight text-slate-900 uppercase flex items-center gap-3">
-                    <Cpu className="w-6 h-6 text-blue-600" /> Analyst Core <span className="text-[10px] bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full border border-blue-200">V4</span>
+                 <h3 className="text-xl font-black tracking-tight text-slate-900 uppercase flex items-center gap-3">
+                    <ShieldCheck className="w-6 h-6 text-emerald-600" /> SYSTEM AUDITOR <span className="text-[10px] bg-emerald-100 text-emerald-600 px-2 py-0.5 rounded-full border border-emerald-200">V4.1</span>
                 </h3>
                 <div className="flex items-center justify-between">
-                    <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block px-3 py-1 bg-slate-50 rounded-full border border-slate-100">Neural Connect v4</span>
+                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block px-3 py-1 bg-slate-50 rounded-full border border-slate-100">Neural Connect v4.1</span>
                     <div className="flex items-center gap-2 px-3 py-1 bg-emerald-50 text-emerald-600 text-[9px] font-bold rounded-full border border-emerald-200 shadow-sm">
                         <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_5px_#10b981]"></div>
-                        LIVE ANALYTICS
-                    </div>
-                </div>
-                    <div className="flex items-center gap-2 px-3 py-1 bg-emerald-50 text-emerald-600 text-[9px] font-bold rounded-full border border-emerald-200 shadow-sm">
-                        <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_5px_#10b981]"></div>
-                        LIVE ANALYTICS
+                        LIVE AUDIT ACTIVE
                     </div>
                 </div>
              </div>
