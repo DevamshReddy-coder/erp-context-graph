@@ -556,8 +556,13 @@ LIMIT 20`,
                     }
                 }
                 
-                // Save to Persistent JSON Cache if successful
-                if (completeTextResponse.trim().length > 0) {
+                // Save to Persistent JSON Cache ONLY for valid data queries (never cache rejections/errors)
+                const isValidDataQuery = completeTextResponse.trim().length > 0 
+                    && parsed.type !== 'rejection'
+                    && results.length > 0
+                    && !OFF_TOPIC_PATTERN.test(normalizedQuery);
+                    
+                if (isValidDataQuery) {
                     const currentCache = loadQueryCache();
                     currentCache[normalizedQuery] = {
                         metadata: metadata,
