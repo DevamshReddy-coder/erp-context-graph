@@ -6,9 +6,13 @@
 
 ## 🎬 **Neural Connect V3: Live Demo Walkthrough**
 
-**WATCH THE S-TIER AUDIT HUB IN ACTION:** [🔗 Play Walkthrough Video](./logs/demo_video.mp4)
+<div align="center">
+  <video src="https://github.com/DevamshReddy-coder/erp-context-graph/raw/main/logs/demo_video.mp4" width="100%" controls>
+    Your browser does not support the video tag.
+  </video>
+</div>
 
-*(GitHub will render the video player natively from the repository)*
+*(Play the video above to see the S-Tier features in action)*
 
 ---
 

@@ -120,8 +120,8 @@ export default function App() {
                if (primaryNode) {
                   setSelectedNodeInfo(primaryNode);
                   setTimeout(() => {
-                    graphRef.current?.centerAt(primaryNode.x, primaryNode.y, 800);
-                    graphRef.current?.zoom(4, 1000);
+                    (graphRef.current as any)?.centerAt((primaryNode as any).x, (primaryNode as any).y, 800);
+                    (graphRef.current as any)?.zoom(4, 1000);
                   }, 200);
                }
             }
