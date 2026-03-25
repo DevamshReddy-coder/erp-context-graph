@@ -317,7 +317,19 @@ export default function App() {
                 <h3 className="text-xl font-black tracking-tight text-slate-900 uppercase flex items-center gap-3">
                     <Cpu className="w-6 h-6 text-blue-600" /> Analyst Core <span className="text-[10px] bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full border border-blue-200">V4</span>
                 </h3>
-                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block px-3 py-1 bg-slate-50 rounded-full border border-slate-100">Neural Connect v4</span>
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block px-3 py-1 bg-slate-50 rounded-full border border-slate-100">Neural Connect v4</span>
+                    <div className="flex items-center gap-2 px-3 py-1 bg-emerald-50 text-emerald-600 text-[9px] font-bold rounded-full border border-emerald-200 shadow-sm">
+                        <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_5px_#10b981]"></div>
+                        LIVE ANALYTICS
+                    </div>
+                </div>
+                    <div className="flex items-center gap-2 px-3 py-1 bg-emerald-50 text-emerald-600 text-[9px] font-bold rounded-full border border-emerald-200 shadow-sm">
+                        <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_5px_#10b981]"></div>
+                        LIVE ANALYTICS
+                    </div>
+                </div>
              </div>
              <p className="text-sm font-bold text-slate-400 leading-relaxed max-w-[80%] italic">Dodge S-Tier parsing transactional context across the O2C grid.</p>
           </div>
