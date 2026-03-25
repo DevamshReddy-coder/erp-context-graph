@@ -215,6 +215,23 @@ export async function POST(req: Request) {
         });
         return new Response(stream, { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
     }
+
+    // ⚡ PRIORITY 1: SQL INJECTION / DESTRUCTIVE COMMAND GUARDRAIL
+    const DESTRUCTIVE_SQL_PATTERN = /\b(delete|drop|truncate|update|insert|alter|vacuum|pragma|attach|detach|create table|grant|revoke)\b/i;
+    if (DESTRUCTIVE_SQL_PATTERN.test(lowerQuery)) {
+        const secMsg = "🚫 **Security Gate — Command Blocked**\n\nDestructive database operations (`DELETE`, `DROP`, `UPDATE`, `INSERT`, `TRUNCATE`) are strictly prohibited.\n\nThis system operates in **read-only audit mode**. Only analytical queries are permitted.\n\nIf you need to audit billing records, try:\n- *\"Show all billing documents for customer 310000108\"*\n- *\"Trace the full flow of billing document 90504248\"*";
+        const encoder = new TextEncoder();
+        const stream = new ReadableStream({
+            start(controller) {
+                const meta = { sql: '', data: [], insights: [], graph_highlights: { nodes: [], edges: [] } };
+                controller.enqueue(encoder.encode(`__METADATA__${JSON.stringify(meta)}\n`));
+                controller.enqueue(encoder.encode(secMsg));
+                controller.close();
+            }
+        });
+        return new Response(stream, { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
+    }
+
     
     // 1. Journal Entry tracing
     if (lowerQuery.includes("journal") && lowerQuery.includes("billing") && /\d+/.test(lowerQuery)) {
