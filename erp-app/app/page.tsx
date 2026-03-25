@@ -1,6 +1,6 @@
 'use client';
 import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
-import { Search, Send, Database, Maximize2, Layers, User, Cpu, Activity, Info, BarChart3, ChevronRight, Minimize2, Settings, TrendingUp, DollarSign, Package, AlertCircle, CheckCircle2, Filter, Table as TableIcon, Download, EyeOff, Eye, Zap } from 'lucide-react';
+import { Search, Send, Database, Maximize2, Layers, User, Cpu, Activity, Info, BarChart3, ChevronRight, Minimize2, Settings, TrendingUp, DollarSign, Package, AlertCircle, CheckCircle2, Filter, Table as TableIcon, Download, EyeOff, Eye, Zap, RefreshCw, Layout, Network } from 'lucide-react';
 import dynamic from 'next/dynamic';
 
 const ForceGraph2D = dynamic(() => import('react-force-graph-2d'), { ssr: false });
@@ -21,6 +21,8 @@ export default function App() {
   const [stats, setStats] = useState({ revenue: '0', orders: 0, customers: 0 });
   const [isFocusMode, setIsFocusMode] = useState(false);
   const [showScanEffect, setShowScanEffect] = useState(false);
+  const [layout, setLayout] = useState<string | undefined>(undefined);
+  const [lastUpdated, setLastUpdated] = useState<string>('');
 
   const graphRef = useRef<any>(null);
 

@@ -3,6 +3,8 @@ import sqlite3 from 'sqlite3';
 import { open } from 'sqlite';
 import path from 'path';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     const dbPath = path.resolve(process.cwd(), 'o2c.sqlite');

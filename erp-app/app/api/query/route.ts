@@ -4,7 +4,9 @@ import { open } from 'sqlite';
 import path from 'path';
 import fs from 'fs';
 
-const DB_PATH = "c:/Users/saide/OneDrive/Documents/Desktop/erp-context-graph/o2c.sqlite";
+export const dynamic = 'force-dynamic';
+
+const DB_PATH = path.join(process.cwd(), "o2c.sqlite");
 const MODEL_NAME = "gemini-2.5-flash";
 
 // 1. Persistent File System Cache for queries (survives hot-reloads and restarts)
