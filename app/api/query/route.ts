@@ -277,7 +277,7 @@ export async function POST(req: Request) {
             };
         }
     }
-    // 4. Delivery Details / Journey for Sales Order (Priority: LOW, exclude billing)
+    // 4. Delivery Details / Journey for Sales Order (Priority: LOW, strictly exclude billing)
     else if ((lowerQuery.includes("delivery") || lowerQuery.includes("show delivery") || lowerQuery.includes("delivery details") || lowerQuery.includes("journey")) && /\d{6,}/.test(lowerQuery) && !lowerQuery.includes("billing")) {
         const docIdMatch = lowerQuery.match(/\d{6,}/);
         if (docIdMatch) {
