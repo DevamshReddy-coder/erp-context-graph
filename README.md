@@ -4,7 +4,7 @@
 
 ---
 
-## 🎬 **Neural Connect V6.0 PRO: Production Walkthrough**
+## 🎬 **Neural Connect V3: Live Demo Walkthrough**
 
 <div align="center">
   <video src="https://github.com/DevamshReddy-coder/erp-context-graph/raw/main/logs/demo_video.mp4" width="100%" controls>
@@ -16,7 +16,7 @@
 
 ---
 
-Dodge S-Tier is a high-density, context-aware graph intelligence platform designed to unify fragmented ERP data into a single interactive audit grid. It features the **V6.0 PRO Analytical Engine**, which combines deterministic forensic logic with Gemini-powered reasoning for 100% accurate transactional tracing.
+Dodge S-Tier is a high-density, context-aware graph intelligence platform designed to unify fragmented ERP data (Orders, Deliveries, Invoices, Payments) into a single interactive audit grid. It features an advanced Hybrid-AI engine that combines deterministic heuristic routing with LLM-powered natural language reasoning.
 
 ---
 
@@ -111,4 +111,4 @@ As required by the assignment, our end-to-end development journey—from data no
 
 ---
 
-**Built for the Forward Deployed Engineer (FDE) Assessment (V6.0 PRO - March 2026).**
+**Built for the Dodge AI Intelligence Challenge (March 2026).**

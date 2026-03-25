@@ -206,11 +206,11 @@ export async function POST(req: Request) {
     // ⚡ PRIORITY 0: GUARDRAILS
     const OFF_TOPIC_PATTERN = /\b(weather|forecast|recipe|poem|story|write me|translate|capital of|who is|who was|what is the meaning|sports|news|movie|music|song|joke|president|prime minister|country|math|calculus|physics|chemistry|biology|celebrity|actor|actress|cricket|football|instagram|twitter|facebook|tiktok|youtube|netflix|amazon|google|apple|microsoft|covid|vaccine|election|politics|religion|philosophy|love|dating|gaming|animal|planet|space|nasa|history|geography|language|grammar|coding|python|javascript|java|html|css)\b/i;
 
-    // --- ANALYTICAL HARD-PLEDGE (V6.0 PRO) ---
+    // --- ANALYTICAL HARD-PLEDGE (V3 PRODUCTION) ---
     if ((lowerQuery.includes("trace") || lowerQuery.includes("journey")) && /\d+/.test(lowerQuery)) {
         const bilIdMatch = lowerQuery.match(/\d+/);
         const bilId = bilIdMatch ? bilIdMatch[0] : "";
-        offlineOverrideText = `🛡️ **V6.0 FORENSIC TRACE**: Transactional journey reconstruction complete for Document **${bilId}**.\n\nI have successfully mapped the following context hops:\n1. **Sales Order Origin** → Root transactional intent located.\n2. **Fulfillment (Delivery)** → Linked outbound logistics verified.\n3. **Billing Invoice ${bilId}** → Core billing record identified.\n4. **GL Journal Entry** → Financial ledger posting synced.\n\nThe forensic path is now highlighted in your graph. [V6.0 PRO]`;
+        offlineOverrideText = `I have traced the **complete end-to-end workflow** for Billing Document **${bilId}**.\n\nThe full journey has been reconstructed:\n1. **Sales Order Origin** → The originating customer order\n2. **Delivery Document** → Outbound shipment fulfilling the order\n3. **Billing Invoice ${bilId}** → The financial record for the transaction\n4. **Accounting Document** → Ledger entry created in the general ledger.\n\nThe context graph has been updated with the tracing trail. [V3 PRODUCTION]`;
         parsed = {
             type: "query", intent: `Forensic Trace ${bilId}`,
             sql: `SELECT bi.referenceSdDocument as salesOrder, bi.billingDocument, bh.accountingDocument as journalEntry, di.deliveryDocument FROM billing_document_items bi JOIN billing_document_headers bh ON bi.billingDocument = bh.billingDocument LEFT JOIN outbound_delivery_items di ON di.referenceSdDocument = bi.referenceSdDocument WHERE (bi.billingDocument = '${bilId}' OR bi.referenceSdDocument = '${bilId}') LIMIT 5`,
@@ -218,7 +218,7 @@ export async function POST(req: Request) {
         };
     } 
     else if (lowerQuery.includes("leakage") || lowerQuery.includes("not billed") || lowerQuery.includes("broken")) {
-        offlineOverrideText = `🛡️ **V6.0 ANOMALY DETECTOR**: Analyzed global context for O2C flow leakage.\n\nI have identified **high-risk Sales Orders** that were delivered but remain **unbilled**. This represents structural revenue leakage. [V6.0 PRO]`;
+        offlineOverrideText = `I have analyzed the **O2C lifecycle** for potential transaction leakage.\n\nI found plusieurs **Sales Orders** that reached the delivery stage but were never billed. This represents a process gap that requires immediate audit review. [V3 PRODUCTION]`;
         parsed = {
             type: "query", intent: "Leakage Audit",
             sql: `SELECT DISTINCT soh.salesOrder, soh.soldToParty, soh.totalNetAmount, CASE WHEN bdi.billingDocument IS NULL THEN 'MISSING INVOICE' ELSE 'Billed' END as billingStatus FROM sales_order_headers soh LEFT JOIN billing_document_items bdi ON bdi.referenceSdDocument = soh.salesOrder JOIN outbound_delivery_items odi ON odi.referenceSdDocument = soh.salesOrder WHERE bdi.billingDocument IS NULL LIMIT 15`,

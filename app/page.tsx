@@ -319,16 +319,10 @@ export default function App() {
         <div className={`transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] bg-white border-l border-slate-200 flex flex-col z-40 ${isSidebarOpen ? 'w-[40%]' : 'w-0 opacity-0 overflow-hidden'}`}>
           <div className="p-10 border-b border-slate-100">
              <div className="flex items-center justify-between mb-3">
-                 <h3 className="text-xl font-black tracking-tight text-slate-900 uppercase flex items-center gap-3">
-                    <ShieldCheck className="w-6 h-6 text-emerald-600" /> SYSTEM AUDITOR <span className="text-[10px] bg-emerald-100 text-emerald-600 px-2 py-0.5 rounded-full border border-emerald-200">V6.0 PRO</span>
+                 <h3 className="text-sm font-black tracking-widest text-slate-900 uppercase">
+                    ANALYST CORE <span className="text-[10px] bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full ml-3 border border-blue-200 uppercase tracking-tighter">Neural Connect V3</span>
                 </h3>
-                <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block px-3 py-1 bg-slate-50 rounded-full border border-slate-100">Neural Connect v6.0 [FINAL]</span>
-                    <div className="flex items-center gap-2 px-3 py-1 bg-emerald-50 text-emerald-600 text-[11px] font-black rounded-full border border-emerald-200 shadow-sm">
-                        <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_5px_#10b981]"></div>
-                        PRO PRODUCTION SYNCED
-                    </div>
-                </div>
+                <p className="text-[10px] font-medium text-slate-400 mt-1 uppercase tracking-widest italic">Dodge S-Tier parsing transactional context across the O2C grid.</p>
              </div>
              <p className="text-sm font-bold text-slate-400 leading-relaxed max-w-[80%] italic">Dodge S-Tier parsing transactional context across the O2C grid.</p>
           </div>
