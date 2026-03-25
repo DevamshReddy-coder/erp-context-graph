@@ -320,13 +320,13 @@ export default function App() {
           <div className="p-10 border-b border-slate-100">
              <div className="flex items-center justify-between mb-3">
                  <h3 className="text-xl font-black tracking-tight text-slate-900 uppercase flex items-center gap-3">
-                    <ShieldCheck className="w-6 h-6 text-emerald-600" /> SYSTEM AUDITOR <span className="text-[10px] bg-emerald-100 text-emerald-600 px-2 py-0.5 rounded-full border border-emerald-200">V5.0 [LIVE]</span>
+                    <ShieldCheck className="w-6 h-6 text-emerald-600" /> SYSTEM AUDITOR <span className="text-[10px] bg-emerald-100 text-emerald-600 px-2 py-0.5 rounded-full border border-emerald-200">V6.0 PRO</span>
                 </h3>
                 <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block px-3 py-1 bg-slate-50 rounded-full border border-slate-100">Neural Connect v5.0 [PRODUCTION]</span>
-                    <div className="flex items-center gap-2 px-3 py-1 bg-emerald-50 text-emerald-600 text-[9px] font-bold rounded-full border border-emerald-200 shadow-sm">
+                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block px-3 py-1 bg-slate-50 rounded-full border border-slate-100">Neural Connect v6.0 [FINAL]</span>
+                    <div className="flex items-center gap-2 px-3 py-1 bg-emerald-50 text-emerald-600 text-[11px] font-black rounded-full border border-emerald-200 shadow-sm">
                         <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_5px_#10b981]"></div>
-                        SYSTEM VERIFIED
+                        PRO PRODUCTION SYNCED
                     </div>
                 </div>
              </div>
