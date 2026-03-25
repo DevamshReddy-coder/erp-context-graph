@@ -263,7 +263,7 @@ export async function POST(req: Request) {
             };
         }
     }
-    // 3. Header Analysis for Sales Order
+    // 3. Header Analysis for Sales Order (Exclude billing)
     else if (lowerQuery.includes("sold-to") && lowerQuery.includes("sales order") && /\d{6,}/.test(lowerQuery) && !lowerQuery.includes("billing")) {
         const docIdMatch = lowerQuery.match(/\d{6,}/);
         if (docIdMatch) {
