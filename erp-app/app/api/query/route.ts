@@ -275,15 +275,21 @@ export async function POST(req: Request) {
             };
         }
     }
-    // 4. Delivery Journey for Sales Order
-    else if (lowerQuery.includes("journey") && lowerQuery.includes("delivery") && /\d{6,}/.test(lowerQuery)) {
+    // 4. Delivery Details / Journey for Sales Order
+    else if ((lowerQuery.includes("delivery") || lowerQuery.includes("show delivery") || lowerQuery.includes("delivery details") || lowerQuery.includes("journey")) && /\d{6,}/.test(lowerQuery)) {
         const docIdMatch = lowerQuery.match(/\d{6,}/);
         if (docIdMatch) {
-            offlineOverrideText = `I have traced the outbound flow for Sales Order **${docIdMatch[0]}**.\n\nThe system has located the outbound delivery documentation along with its defined shipping point. Expanding the relationship graph now to highlight the fulfillment stage.`;
+            offlineOverrideText = `I have traced the outbound delivery flow for Sales Order **${docIdMatch[0]}**.\n\nThe system has located the outbound delivery documentation, shipping point, and customer name. All delivery nodes are now highlighted in the relationship graph.`;
             parsed = {
                 type: "query",
-                intent: `Trace delivery journey for Sales Order ${docIdMatch[0]}`,
-                sql: `SELECT h.*, i.* FROM outbound_delivery_headers h JOIN outbound_delivery_items i ON h.deliveryDocument = i.deliveryDocument WHERE i.referenceSdDocument = '${docIdMatch[0]}'`,
+                intent: `Trace delivery for Sales Order ${docIdMatch[0]}`,
+                sql: `SELECT h.deliveryDocument, h.shippingPoint, i.referenceSdDocument as salesOrder, bp.businessPartnerName as customerName
+FROM outbound_delivery_headers h
+JOIN outbound_delivery_items i ON h.deliveryDocument = i.deliveryDocument
+LEFT JOIN sales_order_headers soh ON soh.salesOrder = i.referenceSdDocument
+LEFT JOIN business_partners bp ON bp.businessPartner = soh.soldToParty
+WHERE i.referenceSdDocument = '${docIdMatch[0]}'
+LIMIT 10`,
                 insights: [],
                 graph_highlights: { nodes: [], edges: [] }
             };
@@ -368,7 +374,18 @@ LIMIT 20`,
             graph_highlights: { nodes: [], edges: [] }
         };
     }
-    // 10. General Conversational Handlers (hi, hello)
+    // 10. Highest Net Amount Sales Order
+    else if ((lowerQuery.includes("highest") || lowerQuery.includes("largest") || lowerQuery.includes("maximum")) && (lowerQuery.includes("net amount") || lowerQuery.includes("sales order"))) {
+        offlineOverrideText = `I have analyzed the entire dataset to determine the highest-value Sales Order.\n\nThe result is now highlighted in the graph for your review.`;
+        parsed = {
+            type: "query",
+            intent: "Find sales order with highest net amount",
+            sql: `SELECT salesOrder, soldToParty, totalNetAmount FROM sales_order_headers ORDER BY totalNetAmount DESC LIMIT 5`,
+            insights: [],
+            graph_highlights: { nodes: [], edges: [] }
+        };
+    }
+    // 11. General Conversational Handlers (hi, hello)
     else if (/^(hi|hello|hey|hii+)\b/i.test(lowerQuery)) {
         offlineOverrideText = "Hello! I am Dodge AI, your Real-Time Graph Intelligence Agent for the Order-to-Cash process. You can ask me to:\n\n- Trace any Billing Document or Sales Order flow\n- Find products with the most billing activity\n- Detect incomplete or broken order flows\n- Analyze revenue by customer or region\n\nHow can I help you today?";
         parsed = {
