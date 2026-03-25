@@ -2,6 +2,16 @@
 
 ### **Enterprise-Grade Order-to-Cash (O2C) Forensic Analysis & Visualization**
 
+---
+
+## 🎬 **Neural Connect V3: Live Demo Walkthrough**
+
+**WATCH THE S-TIER AUDIT HUB IN ACTION:** [🔗 Play Walkthrough Video](./logs/demo_video.mp4)
+
+*(GitHub will render the video player natively from the repository)*
+
+---
+
 Dodge S-Tier is a high-density, context-aware graph intelligence platform designed to unify fragmented ERP data (Orders, Deliveries, Invoices, Payments) into a single interactive audit grid. It features an advanced Hybrid-AI engine that combines deterministic heuristic routing with LLM-powered natural language reasoning.
 
 ---
