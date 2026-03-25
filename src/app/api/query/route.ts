@@ -264,7 +264,7 @@ export async function POST(req: Request) {
         }
     }
     // 3. Header Analysis for Sales Order
-    else if (lowerQuery.includes("sold-to") && lowerQuery.includes("sales order") && /\d{6,}/.test(lowerQuery)) {
+    else if (lowerQuery.includes("sold-to") && lowerQuery.includes("sales order") && /\d{6,}/.test(lowerQuery) && !lowerQuery.includes("billing")) {
         const docIdMatch = lowerQuery.match(/\d{6,}/);
         if (docIdMatch) {
             offlineOverrideText = `I've analyzed the header information for Sales Order **${docIdMatch[0]}**.\n\nThe system has identified the Sold-To party business partner and calculated the total net amount. The primary order flow is now highlighted directly in your graphical interface.`;
@@ -277,8 +277,8 @@ export async function POST(req: Request) {
             };
         }
     }
-    // 4. Delivery Details / Journey for Sales Order
-    else if ((lowerQuery.includes("delivery") || lowerQuery.includes("show delivery") || lowerQuery.includes("delivery details") || lowerQuery.includes("journey")) && /\d{6,}/.test(lowerQuery)) {
+    // 4. Delivery Details / Journey for Sales Order (Priority: LOW, exclude billing)
+    else if ((lowerQuery.includes("delivery") || lowerQuery.includes("show delivery") || lowerQuery.includes("delivery details") || lowerQuery.includes("journey")) && /\d{6,}/.test(lowerQuery) && !lowerQuery.includes("billing")) {
         const docIdMatch = lowerQuery.match(/\d{6,}/);
         if (docIdMatch) {
             offlineOverrideText = `I have traced the outbound delivery flow for Sales Order **${docIdMatch[0]}**.\n\nThe system has located the outbound delivery documentation, shipping point, and customer name. All delivery nodes are now highlighted in the relationship graph.`;
