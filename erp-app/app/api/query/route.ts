@@ -199,6 +199,22 @@ export async function POST(req: Request) {
     let parsed: any = null;
     let offlineOverrideText: string | null = null;
     const lowerQuery = query.toLowerCase();
+
+    // ⚡ PRIORITY 0: GUARDRAILS — Must run FIRST before any LLM call
+    const OFF_TOPIC_PATTERN = /\b(weather|forecast|recipe|poem|story|write me|translate|capital of|who is|who was|what is the meaning|sports|news|movie|music|song|joke|president|prime minister|country|math|calculus|physics|chemistry|biology|celebrity|actor|actress|cricket|football|instagram|twitter|facebook|tiktok|youtube|netflix|amazon|google|apple|microsoft|covid|vaccine|election|politics|religion|philosophy|love|dating|gaming|animal|planet|space|nasa|history|geography|language|grammar|coding|python|javascript|java|html|css)\b/i;
+    if (OFF_TOPIC_PATTERN.test(lowerQuery)) {
+        const rejectionMsg = "🛡️ **Access Denied — Out of Scope Query**\n\nThis system is designed exclusively to answer questions related to the **Order-to-Cash (O2C) dataset**.\n\nI can help you with:\n- Tracing billing documents and sales orders\n- Detecting broken or incomplete flows\n- Analyzing product revenue and journal entries\n\nPlease ask a relevant business question.";
+        const encoder = new TextEncoder();
+        const stream = new ReadableStream({
+            start(controller) {
+                const meta = { sql: '', data: [], insights: [], graph_highlights: { nodes: [], edges: [] } };
+                controller.enqueue(encoder.encode(`__METADATA__${JSON.stringify(meta)}\n`));
+                controller.enqueue(encoder.encode(rejectionMsg));
+                controller.close();
+            }
+        });
+        return new Response(stream, { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
+    }
     
     // 1. Journal Entry tracing
     if (lowerQuery.includes("journal") && lowerQuery.includes("billing") && /\d+/.test(lowerQuery)) {
@@ -346,9 +362,9 @@ LIMIT 20`,
             graph_highlights: { nodes: [], edges: [] }
         };
     }
-    // GUARDRAILS: Detect and reject clearly off-topic queries
+    // GUARDRAILS: Secondary catch (redundant safety net after Priority 0 above)
     else if (/\b(weather|recipe|poem|story|capital of|who is|what is the meaning|write me|translate|sports|news|movie|music|song|joke|president|prime minister|country|math|calculus|physics|chemistry|biology)\b/i.test(lowerQuery)) {
-        offlineOverrideText = "This system is designed to answer questions related to the provided Order-to-Cash dataset only. I can help you trace billing documents, analyze sales orders, find delivery statuses, and explore financial journal entries. Please ask a relevant business question.";
+        offlineOverrideText = "🛡️ **Access Denied — Out of Scope Query**\n\nThis system is designed exclusively to answer questions related to the **Order-to-Cash (O2C) dataset**.\n\nPlease ask a relevant business question about billing, deliveries, or sales orders.";
         parsed = {
             type: "rejection",
             intent: "off-topic",
@@ -390,7 +406,17 @@ LIMIT 20`,
     }
 
     if (parsed.type === "rejection") {
-        return NextResponse.json({ type: "rejection", answer: "O2C scope only." });
+        const rejMsg = offlineOverrideText || "🛡️ This system only answers Order-to-Cash related queries. Please ask about billing documents, sales orders, or deliveries.";
+        const encoder = new TextEncoder();
+        const stream = new ReadableStream({
+            start(controller) {
+                const meta = { sql: '', data: [], insights: [], graph_highlights: { nodes: [], edges: [] } };
+                controller.enqueue(encoder.encode(`__METADATA__${JSON.stringify(meta)}\n`));
+                controller.enqueue(encoder.encode(rejMsg));
+                controller.close();
+            }
+        });
+        return new Response(stream, { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
     }
 
     // --- PRODUCTION SQL SECURITY GATE ---
@@ -398,7 +424,17 @@ LIMIT 20`,
         const lowerSql = parsed.sql.toLowerCase();
         const restricted = ["drop", "delete", "update", "insert", "alter", "vacuum", "pragma", "attach"];
         if (restricted.some(word => lowerSql.includes(word))) {
-            return NextResponse.json({ type: "error", error: "Security Breach: Unauthorized SQL command detected." }, { status: 403 });
+            const secMsg = "🚫 **SQL Security Gate — Command Blocked**\n\nDestructive database operations (`DELETE`, `DROP`, `UPDATE`, `INSERT`) are strictly prohibited.\n\nThis system is read-only and auditing access only. Only `SELECT` queries are permitted.";
+            const encoder = new TextEncoder();
+            const stream = new ReadableStream({
+                start(controller) {
+                    const meta = { sql: parsed.sql, data: [], insights: [], graph_highlights: { nodes: [], edges: [] } };
+                    controller.enqueue(encoder.encode(`__METADATA__${JSON.stringify(meta)}\n`));
+                    controller.enqueue(encoder.encode(secMsg));
+                    controller.close();
+                }
+            });
+            return new Response(stream, { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
         }
     }
 
