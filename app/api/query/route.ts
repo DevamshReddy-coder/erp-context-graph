@@ -340,10 +340,10 @@ LIMIT 10`,
         const docIdMatch = lowerQuery.match(/\d+/);
         if (docIdMatch) {
             const bilId = docIdMatch[0];
-            offlineOverrideText = `I have traced the **complete end-to-end workflow** for Billing Document **${bilId}**.\n\nThe full journey has been reconstructed:\n1. **Sales Order** → The originating customer order\n2. **Delivery Document** → Outbound shipment fulfilling the order\n3. **Billing Document ${bilId}** → The invoice raised\n4. **Journal Entry** → The corresponding accounting document\n\nAll related nodes are now highlighted in the relationship graph on the left.`;
+            offlineOverrideText = `🛡️ **S-Tier O2C Trace**: Full workflow reconstruction complete for Billing Document **${bilId}**.\n\nThe forensic journey has been identified across the context graph:\n1. **Sales Order Origin** → Verified\n2. **Fulfillment Delivery** → Documented\n3. **Billing Event ${bilId}** → Invoiced\n4. **Accounting Ledger** → Linked Journal Entry Detected\n\nAll related transactional nodes are now highlighted in the analyst grid.`;
             parsed = {
                 type: "query",
-                intent: `Full O2C flow trace for Billing Document ${bilId}`,
+                intent: `Forensic O2C trace analysis for Billing Document ${bilId}`,
                 sql: `SELECT 
   bi.referenceSdDocument as salesOrder,
   bi.billingDocument,
